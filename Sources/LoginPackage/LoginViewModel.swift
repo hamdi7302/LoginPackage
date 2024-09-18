@@ -27,7 +27,7 @@ class LoginViewModel: ObservableObject {
     func updateItems () {
         items.enumerated().map { index, array in
             let item = ItemWithID(value: array.last!.value)
-            withAnimation(.linear(duration: 30)) {
+            withAnimation(.linear(duration: 20)) {
                 items[index].insert( item,at: 0)
                 items[index].removeLast()
             }
@@ -37,7 +37,7 @@ class LoginViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.updateItems()
         }
-        timer = Timer.publish(every: 30, on: .current, in: .common)
+        timer = Timer.publish(every: 20, on: .current, in: .common)
             .autoconnect()  // Automatically starts emitting values when subscribed
             .sink { [self] _ in
                 updateItems()

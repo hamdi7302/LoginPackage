@@ -13,7 +13,7 @@ struct ScrollViewCards: View {
     
     var body: some View {
         VStack(spacing: 0){
-            Image("movie\(movieIndex)", bundle: .module)
+            Image("movie\(movieIndex)")
                 .resizable()
                 .frame(width: (UIScreen.main.bounds.width / 3 - 10),height: ((UIScreen.main.bounds.width / 3) * CGFloat.random(in: 1.10...1.45)))
                 .cornerRadius(12)

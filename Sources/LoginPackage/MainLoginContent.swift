@@ -32,8 +32,6 @@ struct MainLoginContent: View {
             }
             
             Button(action: {
-//                viewModel.items[0].swapAt(viewModel.items[0].startIndex, viewModel.items[0].endIndex - 1)
-//                print(viewModel.items)
             }) {
                 Text("Sign in")
                     .font(.headline)

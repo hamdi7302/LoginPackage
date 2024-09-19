@@ -18,15 +18,15 @@ public extension Color {
     }
 }
 
-struct foregroundColorInversed: ViewModifier{
+struct BackgroundColorInversed: ViewModifier{
     @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
-        content.foregroundColor(colorScheme == .dark ? .black : .white)
+        content.background((colorScheme == .dark ? .black : .white))
     }
 }
 
 extension View {
-    func inversedForegroundColor() -> some View {
-        modifier(foregroundColorInversed())
+    func inversedBackgoundColor() -> some View {
+        modifier(BackgroundColorInversed())
     }
 }

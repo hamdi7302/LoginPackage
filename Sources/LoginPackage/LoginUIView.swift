@@ -24,16 +24,20 @@ public struct LoginUIView: View {
                                 ForEach(viewModel.items[rowIndex], id: \.self.id) { colIndex in
                                     ScrollViewCards(movieIndex: colIndex.value)
                                         .id(colIndex.value)
+                                        
                                 }
                             }
                         }
                     }
                 }.rotationEffect(.degrees(180))
+                 
             }.allowsHitTesting(false)
                 .loadfixedMdiumSheet(isPresented: $viewModel.showLoginSteps, sheetContent:{MainLoginContent(viewModel: viewModel)}())
                 .ignoresSafeArea()
             Spacer()
-        }.ignoresSafeArea()
+        }
+        
+        .ignoresSafeArea()
             .onAppear(perform: {
                 viewModel.startTimer()
             })

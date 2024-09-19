@@ -17,7 +17,7 @@ struct MainLoginContent: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(.bottom,16)
-                .inversedForegroundColor()
+                 
                 
             Button(action: {}) {
                 Text("Sign up")
@@ -48,7 +48,7 @@ struct MainLoginContent: View {
                 .font(.caption)
                 .padding([.top, .horizontal])
                 .padding(.bottom)
-                .inversedForegroundColor()
+              
         }
     }
 }

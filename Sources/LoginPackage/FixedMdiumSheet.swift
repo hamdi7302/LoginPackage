@@ -21,7 +21,10 @@ public struct fixedMdiumSheet<SheetContent: View>: ViewModifier {
     var isPresented: Binding<Bool>
     var sheetContent: SheetContent
     @State var height : CGFloat = UIScreen.main.bounds.height
-    public func body(content: Content) -> some View {
+    @Environment(\.colorScheme) var colorScheme
+    
+  
+    public  func body(content: Content) -> some View {
         
         ZStack{
             VStack{
@@ -31,15 +34,18 @@ public struct fixedMdiumSheet<SheetContent: View>: ViewModifier {
                 Spacer()
                 VStack(spacing: 0) {
                     Circle()
-                        .inversedForegroundColor()
+                        .foregroundColor(.primary)
                         .frame(width: 100)
                         .padding(.vertical,8)
                     sheetContent
+                        
                 }
                 .frame(width: UIScreen.main.bounds.width)
-                .background(Color.primary.shadow(color: .primary, radius: 30, x: 0, y: -50))
+                .background(((colorScheme == .dark) ? Color.black : Color.white)
+                    .shadow(color: ((colorScheme == .dark) ? Color.black : Color.white),
+                            radius: 30, x: 0, y: -50))
             }.ignoresSafeArea()
         }.ignoresSafeArea()
-            .background(Color.primary)
+//            .background((colorScheme == .dark) ? Color.black : Color.white)
     }
 }

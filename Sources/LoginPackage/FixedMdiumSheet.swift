@@ -10,15 +10,15 @@ import SwiftUI
 
 // MARK: - View Extension for Sheet
 public extension View {
-    func loadfixedMdiumSheet<SheetContent: View>(isPresented: Binding<Bool>, sheetContent: SheetContent) -> some View {
-        return modifier(fixedMdiumSheet(isPresented: isPresented, sheetContent: sheetContent))
+    func loadfixedMdiumSheet<SheetContent: View>(userCurrentStep: Binding<UserCurrentStep?>, sheetContent: SheetContent) -> some View {
+        return modifier(fixedMdiumSheet(userCurrentStep: userCurrentStep, sheetContent: sheetContent))
     }
 }
 
 
 // MARK: - Sheet Modifier
 public struct fixedMdiumSheet<SheetContent: View>: ViewModifier {
-    var isPresented: Binding<Bool>
+    var userCurrentStep: Binding<UserCurrentStep?>
     var sheetContent: SheetContent
     @State var height : CGFloat = UIScreen.main.bounds.height
     @Environment(\.colorScheme) var colorScheme
@@ -31,14 +31,9 @@ public struct fixedMdiumSheet<SheetContent: View>: ViewModifier {
                 content
             }.ignoresSafeArea()
             VStack(spacing: 0) {
-                Spacer()
+                Spacer(minLength: 300)
                 VStack(spacing: 0) {
-                    Circle()
-                        .foregroundColor(.primary)
-                        .frame(width: 100)
-                        .padding(.vertical,8)
                     sheetContent
-                        
                 }
                 .frame(width: UIScreen.main.bounds.width)
                 .background(((colorScheme == .dark) ? Color.black : Color.white)

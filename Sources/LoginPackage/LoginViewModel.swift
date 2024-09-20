@@ -14,6 +14,12 @@ struct ItemWithID: Identifiable {
    let value: Int
 }
 
+public enum UserCurrentStep: Identifiable{
+    public var id: Self { self }
+    case loginAsGuest
+    case authenticate
+}
+
 class LoginViewModel: ObservableObject {
 
     @Published var items: [[ItemWithID]] = [
@@ -21,7 +27,7 @@ class LoginViewModel: ObservableObject {
         Array(7...12).map { ItemWithID(value: $0) },
         Array(13...18).map { ItemWithID(value: $0) }
     ]
-    @Published var showLoginSteps: Bool = true
+    @Published var userCurrentStep: UserCurrentStep? = nil
     var timer: AnyCancellable?
 
     func updateItems () {

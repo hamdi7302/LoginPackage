@@ -12,18 +12,22 @@ let package = Package(
         .library(
             name: "LoginPackage",
             targets: ["LoginPackage"]),
+    ],  dependencies: [
+        // Add NetworkingPackage as a dependency using a relative path
+        .package(path: "../NetworkingPackage")  // Adjust the path if needed
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "LoginPackage"
-//        ,resources: [
-//                .process("Resources/Media.xcassets")]
+            name: "LoginPackage",
+            dependencies: [
+                "NetworkingPackage"  // Add NetworkingPackage to the target dependencies
+            ]
         ),
         .testTarget(
             name: "LoginPackageTests",
             dependencies: ["LoginPackage"]),
     ]
 )
- 
+

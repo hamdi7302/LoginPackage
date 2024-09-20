@@ -10,9 +10,11 @@
 import SwiftUI
 import Combine
 
+
 public struct LoginUIView: View {
     
     public init(){}
+
     @StateObject var viewModel: LoginViewModel = LoginViewModel()
     public var body: some View {
         VStack {
@@ -24,23 +26,37 @@ public struct LoginUIView: View {
                                 ForEach(viewModel.items[rowIndex], id: \.self.id) { colIndex in
                                     ScrollViewCards(movieIndex: colIndex.value)
                                         .id(colIndex.value)
-                                        
+                                    
                                 }
                             }
                         }
                     }
                 }.rotationEffect(.degrees(180))
-                 
+                
             }.allowsHitTesting(false)
-                .loadfixedMdiumSheet(isPresented: $viewModel.showLoginSteps, sheetContent:{MainLoginContent(viewModel: viewModel)}())
+                .loadfixedMdiumSheet(userCurrentStep: $viewModel.userCurrentStep, sheetContent:{
+                        MainLoginContent(viewModel: viewModel)
+                }())
                 .ignoresSafeArea()
             Spacer()
         }
         
         .ignoresSafeArea()
-            .onAppear(perform: {
-                viewModel.startTimer()
-            })
+        .onAppear(perform: {
+            viewModel.startTimer()
+        })
+        .sheet(item: $viewModel.userCurrentStep) {
+            
+        } content: { step in
+            switch step {
+            case .authenticate:
+              WebView()
+            case .loginAsGuest:
+                WebView()
+            }
+        }
+
+      
     }
 }
 

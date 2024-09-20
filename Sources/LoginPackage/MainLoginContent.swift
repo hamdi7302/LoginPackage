@@ -10,17 +10,25 @@ import SwiftUI
 struct MainLoginContent: View {
     @StateObject var viewModel: LoginViewModel
   
- 
     var body: some View {
+        
         VStack(spacing: 8) {
+            
+            Circle()
+                .foregroundColor(.primary)
+                .frame(width: 100)
+                .padding(.vertical,8)
+            
             Text("Welcome to App")
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(.bottom,16)
                  
                 
-            Button(action: {}) {
-                Text("Sign up")
+            Button(action: {
+//                viewModel.userCurrentStep = .authenticate
+            }) {
+                Text("Authenticate")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding(10)
@@ -32,8 +40,9 @@ struct MainLoginContent: View {
             }
             
             Button(action: {
+                
             }) {
-                Text("Sign in")
+                Text("Enter as guest")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding(10)

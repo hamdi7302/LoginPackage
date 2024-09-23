@@ -26,7 +26,7 @@ struct MainLoginContent: View {
                  
                 
             Button(action: {
-//                viewModel.userCurrentStep = .authenticate
+                viewModel.userCurrentStep = .creatingToken
             }) {
                 Text("Authenticate")
                     .font(.headline)

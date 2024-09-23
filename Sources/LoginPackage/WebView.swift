@@ -11,25 +11,36 @@ import WebKit
 import Combine
 
 struct WebView: UIViewRepresentable {
-    @Environment(\.dismiss) var dismiss
     var webViewObserver: NSKeyValueObservation?
     let wKWebView: WKWebView
+    @StateObject var viewModel: LoginViewModel
     private var cancellables = Set<AnyCancellable>()
+
     
-    init() {
+    init(viewModel: LoginViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        
         self.wKWebView = WKWebView(frame: .zero)
+       
         wKWebView.publisher(for: \.url)
             .sink { [ self] url in
+                print(url)
                 guard let url else {return }
-                if (url.absoluteString.contains("/authenticate/allow")){
-                    dismiss()
+                if (url.absoluteString.contains("allow")){
+                    viewModel.userCurrentStep = .authenticated
                 }
             }
             .store(in: &cancellables)
     }
 
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        wKWebView.load(URLRequest(url: URL(string: "https://www.themoviedb.org/authenticate/6212942fec63ada16f85763c67d075b9139b0aeb")!))
+ 
+        guard let step = viewModel.userCurrentStep, let userUrl = step.url else { return }
+        
+         
+       
+            wKWebView.load(URLRequest(url: userUrl))
+   
     }
     func makeUIView(context: Context) -> some UIView {
         return wKWebView
@@ -38,6 +49,7 @@ struct WebView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
+    
     class Coordinator: NSObject, WKUIDelegate {
         var parent: WebView
         
@@ -46,10 +58,7 @@ struct WebView: UIViewRepresentable {
         }
     }
 }
-
-#Preview {
-    WebView()
-}
+ 
 
 
 

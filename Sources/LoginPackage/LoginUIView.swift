@@ -42,21 +42,14 @@ public struct LoginUIView: View {
         }
         
         .ignoresSafeArea()
+        
+        
+        .sheet(isPresented: $viewModel.openUrlSheet, content: {
+            WebView(viewModel: viewModel)
+        })
         .onAppear(perform: {
             viewModel.startTimer()
         })
-        .sheet(item: $viewModel.userCurrentStep) {
-            
-        } content: { step in
-            switch step {
-            case .authenticate:
-              WebView()
-            case .loginAsGuest:
-                WebView()
-            }
-        }
-
-      
     }
 }
 

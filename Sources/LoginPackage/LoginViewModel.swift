@@ -73,7 +73,7 @@ class LoginViewModel: ObservableObject {
     
     func createUserSession (){
         authNetworkManager.createUserSession().sink { res in
-            SessionForUser
+            
         } receiveValue: { value in
             print(value)
         }.store(in: &cancellables)

@@ -43,10 +43,6 @@ public struct LoginUIView: View {
         
         .ignoresSafeArea()
         
-        
-        .sheet(isPresented: $viewModel.openUrlSheet, content: {
-            WebView(viewModel: viewModel)
-        })
         .onAppear(perform: {
             viewModel.startTimer()
         })

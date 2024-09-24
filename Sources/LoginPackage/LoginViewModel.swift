@@ -25,7 +25,6 @@ class LoginViewModel: ObservableObject {
         Array(13...18).map { ItemWithID(value: $0) }
     ]
     @Published var userCurrentStep: UserCurrentStep? = nil
-    @Published var openUrlSheet: Bool = false
     let authNetworkManager = AuthNetworkManager()
     var timer: AnyCancellable?
     
@@ -42,12 +41,8 @@ class LoginViewModel: ObservableObject {
             case .creatingToken:
                 // create temp token
                 self?.createRequestToken()
-            case .waitingForUserApproval(let uRL):
-                self?.openUrlSheet = true
-                self?.stopTimer()
             case .authenticated:
                 // after approval in webview create a newValid user session
-                self?.openUrlSheet = false
                 self?.createUserSession()
                 self?.startTimer()
                 break
@@ -64,8 +59,9 @@ class LoginViewModel: ObservableObject {
                 // show alert
             } receiveValue: { [weak self] res in
                 guard let url = URL(string: "https://www.themoviedb.org/authenticate/\(res.request_token)") else {return}
-                AuthManager.shared.setAuthToken(res.request_token)
-                self?.userCurrentStep = .waitingForUserApproval(url)
+                
+                AuthManager.shared.setAuthToken(createdToken: CreatedToken(token: res.request_token, expiresAt: res.expires_at.toDate()))
+                UIApplication.shared.open(url)
                
             }.store(in: &cancellables)
         
